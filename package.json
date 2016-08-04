@@ -1,0 +1,17 @@
+{
+  "name": "guest-security",
+  "main": "app.js",
+  "dependencies": {
+    "activedirectory": "^0.7.2",
+    "async": "^2.0.0-rc.5",
+    "body-parser": "^1.15.0",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^6.2.0",
+    "mocha": "*",
+    "multiparty": "^4.1.2",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+  }
+}

@@ -1,0 +1,74 @@
+<div layout="row" layout-sm="column" layout-align="space-around" ng-show="!show">
+    <md-card ng-show="error">
+        <md-toolbar class="md-warn" >
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Ошибка обновления списка пропусков на согласовании</h2>
+            </div>
+        </md-toolbar>
+    </md-card>
+    <md-progress-circular md-mode="indeterminate" md-diameter="75" ng-show="!error"></md-progress-circular>
+</div>
+<div class="row" ng-show="show">
+    <md-card>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Пропуски на согласовании</h2>
+                <div flex layout="raw" layout-align="end center">
+                    <md-button ng-click="getInfo()">
+                        <md-icon md-svg-src="icon/refresh.svg"></md-icon>&nbsp&nbsp&nbspОбновить
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div ng-show="data.length==0"><h3 class="md-title">&nbsp;&nbsp;&nbsp;Список пропусков на согласовании пуст</h3></div>
+        <md-table-container ng-show="view1 && !(data.length==0)"
+                            style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+                            unselectable="on"
+                            onselectstart="return false;"
+                            onmousedown="return false;">
+            <table md-table>
+                <thead md-head md-order="NAME_DRVR">
+                <tr md-row>
+                    <th md-column md-order-by="DOKNR">Номер документа SAP ERP</th>
+                    <th md-column md-order-by="NAME_DRVR">Имя посетителя</th>
+                    <th md-column md-order-by="E_DATE">Дата изменения состояния</th>
+                    <th md-column md-order-by="E_TIME">Время изменения состояния</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row class="trOnmouse" ng-repeat="guest in data | orderBy: NAME_DRVR" ng-click="showAdvanced($event, guest.DOKNR)" >
+                    <td md-cell>{{guest.DOKNR_int}}</td>
+                    <td md-cell>{{guest.NAME_DRVR}}</td>
+                    <td md-cell>{{guest.E_DATE}}</td>
+                    <td md-cell>{{guest.E_TIME}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-container ng-show="view2 && !(data.length==0)"
+                            style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+                            unselectable="on"
+                            onselectstart="return false;"
+                            onmousedown="return false;">
+            <table md-table>
+                <thead md-head md-order="NAME_DRVR">
+                    <tr md-row>
+                        <th md-column md-order-by="DOKNR">Номер документа SAP ERP</th>
+                        <th md-column md-order-by="NAME_DRVR">Имя посетителя</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row class="trOnmouse" ng-repeat="guest in data | orderBy: NAME_DRVR" ng-click="showAdvanced($event, guest.DOKNR)" >
+                    <td md-cell>{{guest.DOKNR_int}}</td>
+                    <td md-cell>{{guest.NAME_DRVR}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-show="listSpinner">
+            <md-progress-circular md-mode="indeterminate" md-diameter="75"></md-progress-circular>
+        </div>
+    </md-card>
+</div>

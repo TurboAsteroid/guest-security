@@ -1,0 +1,187 @@
+<div layout="row" layout-sm="column" layout-align="space-around" ng-show="!show">
+    <md-progress-circular md-mode="indeterminate" md-diameter="75"></md-progress-circular>
+</div>
+<md-content ng-show="show">
+    <md-card class="minHeight">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Пропуск {{data.DATA_CARD.ZPROPUSK}}</h2>
+                <div flex layout="raw" layout-align="end center">
+                    <md-button aria-label="Назад" ng-click="backToList57()" ng-show="actionIN.is || actionRET.is">
+                        <md-icon md-svg-src="icon/arrow-back.svg"></md-icon>&nbsp&nbsp&nbspНазад
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <md-content class="minHeight">
+            <div layout="row" layout-sm="column" layout-align="space-around" ng-show="cardSpinner">
+                <md-progress-circular md-mode="indeterminate" md-diameter="75"></md-progress-circular>
+            </div>
+            <div flex layout="row" layout-wrap>
+                <div flex-gt-md="50" layout="column">
+                    <form autocomplete="off" ng-show="!cardSpinner">
+                        <md-input-container class="md-block">
+                            <label><strong>Кликните сюда и считайте код пропуска</strong></label>
+                            <input autocomplete="off" type="text" class="form-control" id="cardNumber" name="cardNumber"
+                                   ng-model="cardN" ng-click="clear()" ng-change="getInfo()" pattern="[0-9]{1,10}"
+                                   maxlength="10">
+                        </md-input-container>
+                    </form>
+                </div>
+                <div flex-gt-md="25" layout="column">
+                    <md-button aria-label="Отправить" ng-click="showSendConfirm($event)" ng-show="actionIN.is" class="md-block">
+                        <md-icon md-svg-src="icon/cloud-upload.svg"></md-icon>&nbsp&nbsp&nbsp{{actionIN.DESCRIPTION}}
+                    </md-button>
+                </div>
+                <div flex-gt-md="25" layout="column">
+                    <md-button aria-label="На доработку" ng-click="showReworkConfirm($event)" ng-show="actionRET.is" class="md-block">
+                        <md-icon md-svg-src="icon/create.svg"></md-icon>&nbsp&nbsp&nbsp{{actionRET.DESCRIPTION}}
+                    </md-button>
+                </div>
+            </div>
+            <md-card ng-show="!cardExists && !(data === null)">
+                <md-toolbar class="md-warn">
+                    <div class="md-toolbar-tools">
+                        <h2 class="md-flex">{{data.RESULT_TXT}}</h2>
+                    </div>
+                </md-toolbar>
+            </md-card>
+            <div ng-show="cardExists">
+                <div flex layout="row" layout-wrap>
+                    <div flex-gt-md="50" layout="column">
+                        <md-list class="minHeightList">
+                            <!-- принадлежит проверяющему пропуск -->
+                            <spin ng-repeat="APPRDATA in data.APPRDATA" ng-if="APPRDATA.APRROLE == 'IW'" ng-show="view1">
+                                <md-list-item class="md-title">
+                                    <md-card class="status" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)">
+                                        <strong>{{APPRDATA.APRST_RU}}</strong>
+                                    </md-card>
+                                </md-list-item>
+                                <md-list-item class="minHeightList"><strong>ФИО инициатора:&nbsp;</strong>{{APPRDATA.APRNAME_FULL}}</md-list-item>
+                                <md-list-item class="minHeightList"><strong>ФИО создателя:&nbsp;</strong>{{APPRDATA.CREATED_BY_NAME}}</md-list-item>
+                                <md-list-item class="minHeightList"><strong>Дата создания:&nbsp;</strong>{{APPRDATA.CREATED_ON}}</md-list-item>
+                                <md-list-item class="minHeightList"><strong>Время создания:&nbsp;</strong>{{APPRDATA.CREATED_TM}}</md-list-item>
+                                <md-divider></md-divider>
+                            </spin>
+                                <!-- принадлежит проверяющему пропуск -->
+                                <md-list-item class="minHeightList" ng-show="view1">
+                                    <span class="md-title">Состояние пропуска:&nbsp;</span>
+                                    <span class="md-title"><strong>{{data.ES_STATUS_T.DOSTX}}</strong></span>
+                                </md-list-item>
+                                <!-- принадлежит выдающему пропуск -->
+                                <md-list-item class="md-title" ng-show="!view1">
+                                    <md-card class="status" ng-class="gc">
+                                        Состояние пропуска:&nbsp;<strong>{{data.ES_STATUS_T.DOSTX}}</strong>
+                                    </md-card>
+                                </md-list-item>
+                                <!-- принадлежит проверяющему пропуск -->
+                                <md-list-item class="minHeightList" ng-show="view1">
+                                    <span><strong>Код разового пропуска:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.ZPROPUSK}}</span>
+                                </md-list-item>
+                                <md-list-item class="minHeightList">
+                                    <span><strong>Номер пропуска в SAP ERP:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.DOKNR_int}}</span>
+                                </md-list-item>
+                                <md-list-item class="minHeightList">
+                                    <span><strong>Документ удостоверяющий личность:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.ID_CARD_NUMB}}</span>
+                                </md-list-item>
+                                <md-list-item class="minHeightList">
+                                    <span><strong>ФИО:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.NAME_DRVR}}</span>
+                                </md-list-item>
+                                <md-list-item class="minHeightList">
+                                    <span><strong>Действителен с:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.VALID_DATE_FROM}}</span>
+                                </md-list-item>
+                                <md-list-item class="minHeightList">
+                                    <span><strong>Действителен по:&nbsp;</strong></span>
+                                    <span>{{data.DATA_CARD.VALID_DATE_TO}}</span>
+                                </md-list-item>
+                            </md-list>
+                    </div>
+                    <div flex-gt-md="50" layout="column">
+                        <md-list>
+                            <md-list-item class="minHeightList">
+                                <span class="md-title">Направляется к сотруднику</span>
+                                <span></span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;ФИО:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.INIT_PNM}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;Должность:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.INIT_SNM}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;Подразделение:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.INIT_ONM}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span>&nbsp;</span>
+                            </md-list-item>
+
+                            <md-list-item class="minHeightList">
+                                <span class="md-title">Пропуск введен сотрудником</span>
+                                <span></span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;ФИО:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.AUTHOR_PNM}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;Должность:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.AUTHOR_SNM}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>&nbsp;&nbsp;&nbsp;Подразделение:&nbsp;</strong></span>
+                                <span>{{data.DATA_CARD.AUTHOR_ONM}}</span>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div ng-show="data.DOCUMENTFILES.length <= 0">
+                    <h3 class="md-title">&nbsp;&nbsp;&nbsp;Вы не прикрепили ни одного файла к пропуску</h3>
+                </div>
+                    <div flex ng-show="data.DOCUMENTFILES.length > 0">
+                        <md-table-container
+                                style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+                                unselectable="on"
+                                onselectstart="return false;"
+                                onmousedown="return false;">
+                            <table md-table>
+                                <thead md-head class="">
+                                <tr md-row>
+                                    <th md-column class="md-column-filesList"></th>
+                                    <th md-column class="md-column-filesList">Имя файла</th>
+                                    <th md-column class="md-column-filesList">Тип файла</th>
+                                    <th md-column class="md-column-filesList">ФИО прикрепившего файл</th>
+                                    <th md-column class="md-column-filesList">Дата создания</th>
+                                    <th md-column class="md-column-filesList">Время создания</th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row ng-repeat="DOCUMENTFILE in data.DOCUMENTFILES" class="trOnmouse" ng-click="open(DOCUMENTFILE.REC_EXT_ID, DOCUMENTFILE.VERSION, DOCUMENTFILE.DESCRIPTION)">
+                                    <td md-cell class="md-cell-my"><md-icon md-svg-src="icon/drive-file.svg"></md-icon></td>
+                                    <td md-cell class="md-cell-my">{{DOCUMENTFILE.DESCRIPTION}}</td>
+                                    <td md-cell class="md-cell-my">{{DOCUMENTFILE.DAPPL}}</td>
+                                    <td md-cell class="md-cell-my">{{DOCUMENTFILE.CREATED_BY}}</td>
+                                    <td md-cell class="md-cell-my">{{DOCUMENTFILE.CREATED_ON}}</td>
+                                    <td md-cell class="md-cell-my">{{DOCUMENTFILE.CREATED_TM}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                    </div>
+                    <div flex layout="raw" layout-align="end center" ng-show="!view1">
+                        <md-button class="md-button" ngf-select="upload()" ng-model="file" name="file" ngf-max-size="20MB" ng-show="addButton">
+                            <md-icon md-svg-src="icon/add.svg"></md-icon>&nbsp&nbsp&nbspПрикрепить файл
+                        </md-button>
+                    </div>
+            </div>
+        </md-content>
+    </md-card>
+</md-content>
