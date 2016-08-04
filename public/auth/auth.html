@@ -1,0 +1,32 @@
+<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <div flex-xs flex-gt-xs="60" layout="column" layout-align="center center">
+        <md-card>
+          <md-card-content>
+              <h2>Разовый пропуск</h2>
+                <form name="loginForm" ng-submit="login()" ng-show="!entering">
+                    <md-input-container class="md-block">
+                        <label>Имя пользователя</label>
+                        <input md-maxlength="30" required md-no-asterisk name="username" ng-model="user.username">
+                        <div ng-messages="loginForm.username.$error">
+                            <div ng-message="required">Требуется ввести имя пользователя</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Пароль</label>
+                        <input type="password" required name="password" ng-model="user.password">
+                        <div ng-messages="loginForm.password.$error">
+                            <div ng-message="required">Требуется ввести пароль</div>
+                        </div>
+                    </md-input-container>
+                    <p class="errorFont">{{message}}</p>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button aria-label="Вход" type="submit">
+                            Вход&nbsp&nbsp&nbsp<md-icon md-svg-src="icon/exit-to-app.svg"></md-icon>
+                        </md-button>
+                    </md-card-actions>
+                </form>
+              <div class="md-body-1" ng-show="entering">Вход в систему. Пожалуйста подождите...</div>
+          </md-card-content>
+        </md-card>
+    </div>
+</md-content>

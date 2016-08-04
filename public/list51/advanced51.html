@@ -1,0 +1,149 @@
+<div class="minHeightIEModal advanced">
+    <div flex ng-show="view1" class="advanced">
+        <md-toolbar>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head>
+                    <tr md-row>
+                        <th md-column class="md-column-my">Отметка</th>
+                        <th md-column class="md-column-my">ФИО инициатора</th>
+                        <th md-column class="md-column-my">ФИО создателя</th>
+                        <th md-column class="md-column-my">Дата создания</th>
+                        <th md-column class="md-column-my">Время создания</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="APPRDATA in data.APPRDATA" ng-if="APPRDATA.APRROLE == 'IW'">
+                        <td md-cell class="md-cell-my" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)"><strong>{{APPRDATA.APRST_RU}}</strong></td>
+                        <td md-cell class="md-cell-my" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)"><strong>{{APPRDATA.APRNAME_FULL}}</strong></td>
+                        <td md-cell class="md-cell-my" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)"><strong>{{APPRDATA.CREATED_BY_NAME}}</strong></td>
+                        <td md-cell class="md-cell-my" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)"><strong>{{APPRDATA.CREATED_ON}}</strong></td>
+                        <td md-cell class="md-cell-my" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)"><strong>{{APPRDATA.CREATED_TM}}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+        </md-toolbar>
+    </div>
+    <div flex class="md-padding advanced" layout="row" layout-wrap layout-align="center top" >
+        <div flex-gt-md="50" layout="column">
+            <md-card class="advancedWidth">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Информация о посетителе и пропуске</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-list class="minHeightList">
+                        <md-list-item class="minHeightList">
+                            <span class="md-title">Состояние пропуска:&nbsp;</span>
+                            <span class="md-title"><strong>{{data.ES_STATUS_T.DOSTX}}</strong></span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>Номер пропуска в SAP ERP:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.DOKNR_int}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>Документ удост. личность:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.ID_CARD_NUMB}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>ФИО:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.NAME_DRVR}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>Действителен с:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.VALID_DATE_FROM}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>Действителен по:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.VALID_DATE_TO}}</span>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+            <div ng-repeat="APPRDATA in data.APPRDATA" ng-if="APPRDATA.APRROLE == 'IW'" ng-show="view2"  class="advanced">
+                <md-card class="advancedWidth">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Информация об отметке</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-list class="minHeightList">
+                            <md-list-item class="minHeightList">
+                                <md-card class="md-title status" ng-class="addClass(APPRDATA.APRST, APPRDATA.APRROLE)">
+                                    <strong>Отметка:&nbsp;{{APPRDATA.APRST_RU}}</strong>
+                                </md-card>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>ФИО инициатора:&nbsp;</strong></span>
+                                <span>{{APPRDATA.APRNAME_FULL}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>ФИО создателя:&nbsp;</strong></span>
+                                <span>{{APPRDATA.CREATED_BY_NAME}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>Дата создания:&nbsp;</strong></span>
+                                <span>{{APPRDATA.CREATED_ON}}</span>
+                            </md-list-item>
+                            <md-list-item class="minHeightList">
+                                <span><strong>Время создания:&nbsp;</strong></span>
+                                <span>{{APPRDATA.CREATED_TM}}</span>
+                            </md-list-item>
+                        </md-list>
+                        </md-list>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        <div flex-gt-md="50" layout="column">
+            <md-card class="advancedWidth">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Информация об ответственных сотрудниках</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-list>
+                        <md-list-item class="minHeightList">
+                            <span class="md-title">Направляется к сотруднику</span>
+                            <span></span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;ФИО:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.INIT_PNM}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;Должность:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.INIT_SNM}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;Подразделение:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.INIT_ONM}}</span>
+                        </md-list-item>
+                        <hr>
+                        <md-list-item class="minHeightList">
+                            <span class="md-title">Пропуск введен сотрудником</span>
+                            <span></span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;ФИО:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.AUTHOR_PNM}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;Должность:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.AUTHOR_SNM}}</span>
+                        </md-list-item>
+                        <md-list-item class="minHeightList">
+                            <span><strong>&nbsp;&nbsp;&nbsp;Подразделение:&nbsp;</strong></span>
+                            <span>{{data.DATA_CARD.AUTHOR_ONM}}</span>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div flex layout="raw" layout-align="end center" class="advanced"><md-button class="md-button md-primary" ng-click="hide()">Закрыть</md-button></div>
+</div>
