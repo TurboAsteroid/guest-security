@@ -7,7 +7,7 @@ module.exports = {
 	//пароль пользователя сап
 	'sapPassword': 'sRec137K',
 	//сервер сап
-	'url': 'https://sap-prx.ugmk.com:442/ummc/permit',
+	'url': 'https://sap-prx.ugmk.com:443/ummc/permit',
 	
 	//сервер  АД
 	'adServer': 'ldap://elem-dc0.elem.ru',
